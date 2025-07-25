@@ -229,7 +229,7 @@ function App() {
           </aside>
         </div>
 
-        <section className="mt-12 text-center">
+        <section className="mt-12 text-center mb-4">
           <div className="inline-block bg-white bg-opacity-80 px-6 py-4 rounded-xl shadow-md">
             <h3 className="text-lg font-bold text-[#5D4037]">
               🌟 More Features Coming Soon!
