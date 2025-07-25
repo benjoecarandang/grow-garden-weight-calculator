@@ -1,5 +1,5 @@
 import React from "react";
-import { Leaf, Star, Flame, Zap } from "lucide-react";
+import { Leaf, Star, Flame, Zap, Rabbit } from "lucide-react";
 
 type PetWeightTier = {
   label: string;
@@ -13,9 +13,18 @@ type PetWeightTier = {
 
 const weightTiers: PetWeightTier[] = [
   {
-    label: "Normal",
+    label: "Small",
     minWeight: 0,
-    maxWeight: 1,
+    maxWeight: 0.99,
+    icon: <Rabbit className="w-6 h-6 text-gray-500" />,
+    bg: "bg-gray-100",
+    text: "text-gray-800",
+    border: "border-gray-300"
+  },
+  {
+    label: "Normal",
+    minWeight: 1,
+    maxWeight: 4.99,
     icon: <Leaf className="w-6 h-6 text-green-500" />,
     bg: "bg-green-100",
     text: "text-green-800",
@@ -23,8 +32,8 @@ const weightTiers: PetWeightTier[] = [
   },
   {
     label: "Huge",
-    minWeight: 1,
-    maxWeight: 5,
+    minWeight: 5,
+    maxWeight: 7.99,
     icon: <Star className="w-6 h-6 text-yellow-500" />,
     bg: "bg-yellow-100",
     text: "text-yellow-800",
@@ -32,8 +41,8 @@ const weightTiers: PetWeightTier[] = [
   },
   {
     label: "Titanic",
-    minWeight: 5,
-    maxWeight: 7,
+    minWeight: 8,
+    maxWeight: 8.99,
     icon: <Flame className="w-6 h-6 text-red-500" />,
     bg: "bg-red-100",
     text: "text-red-800",
@@ -57,7 +66,7 @@ const PetWeightClassification: React.FC = () => {
         <div className="w-full max-h-24 bg-[#FDC5F5] text-[#5D4037] flex items-center justify-center rounded-xl shadow-md"></div>
 
         <h2 className="text-2xl font-bold text-lime-800 text-center mb-4">
-          🌱 Pet Weight Tiers
+        🦖 Pet Classifications
         </h2>
         <div className="flex flex-col space-y-4">
           {weightTiers.map((tier, idx) => (

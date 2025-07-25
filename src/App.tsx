@@ -4,10 +4,11 @@ import Navbar from "./components/Navbar";
 import PetWeightClassification from "./components/PetWeightClassification";
 import PetTabs from "./components/PetTabs";
 import "./App.css";
+import Footer from "./components/Footer";
 
 function App() {
   const [hatchedWeight, setHatchedWeight] = useState("");
-  const [age, setAge] = useState("");
+  const [age, setAge] = useState("1");
   const [reverseAge, setReverseAge] = useState("");
   const [currentWeight, setCurrentWeight] = useState("");
 
@@ -26,10 +27,12 @@ function App() {
   };
 
   const classify = (weight: number) => {
-    if (weight > 7) return { label: "Godly", color: "#FDC5F5", icon: "🌟" };
-    if (weight > 5) return { label: "Titanic", color: "#A2D2FF", icon: "🗿" };
-    if (weight > 1) return { label: "Huge", color: "#FDE74C", icon: "🪵" };
-    return { label: "Normal", color: "#7BC47F", icon: "🌱" };
+    if (weight > 8.99) return { label: "Godly", color: "#FDC5F5", icon: "🌟" };
+    if (weight > 7.99)
+      return { label: "Titanic", color: "#A2D2FF", icon: "🗿" };
+    if (weight > 4.99) return { label: "Huge", color: "#FDE74C", icon: "🪵" };
+    if (weight > 0.99) return { label: "Normal", color: "#7BC47F", icon: "🐔" };
+    return { label: "Small", color: "#E4E1DC", icon: "🌱" };
   };
 
   const weight = calculateWeight(hatchedWeight, age);
@@ -39,14 +42,32 @@ function App() {
   const grownClass = classify(parseFloat(baseWeight));
 
   return (
-    <main className="min-h-screen bg-[#A2D2FF] px-4 py-6 font-[Quicksand,sans-serif]">
+    <main className="min-h-screen bg-[#A2D2FF] px-4 py-6 flex flex-col justify-between">
       <Navbar />
 
-      <section className="max-w-7xl mx-auto">
+      <section className="max-w-7xl mx-auto mb-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3 space-y-6">
             {/* Adsense placement */}
             <div className="w-full max-h-24 bg-[#FDC5F5] text-[#5D4037] flex items-center justify-center rounded-xl shadow-md"></div>
+
+            <div className="bg-green-50 p-6 rounded-lg shadow-md mx-auto">
+              <h2 className="text-2xl font-bold text-green-800 mb-4">
+                Pet Growth Mechanics
+              </h2>
+
+              <div>
+                <p>
+                  Upon hatching, a pet’s weight is randomly assigned and
+                  directly impacts both its starting stats and its potential
+                  growth by age 100. Classification is based on hatch weight:
+                  Small (Less than 1kg), Normal (1kg to 4.99kg), Huge (5kg to
+                  7.99kg), Titanic (8kg and 8.99kg), and Godly (9kg+). For
+                  example, a pet hatched at 1 kg may reach up to 10 kg at age
+                  100, while one hatched at 3 kg can grow up to 30 kg.
+                </p>
+              </div>
+            </div>
 
             <PetTabs
               grownContent={
@@ -84,7 +105,11 @@ function App() {
                         <input
                           type="number"
                           value={reverseAge}
-                          onChange={(e) => setReverseAge(e.target.value)}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            if (value >= 0 && value <= 100)
+                              setReverseAge(e.target.value);
+                          }}
                           disabled={!currentWeight}
                           className={`w-full px-4 py-2 rounded-xl pr-10 text-white ${
                             currentWeight
@@ -92,6 +117,8 @@ function App() {
                               : "bg-gray-400 cursor-not-allowed"
                           }`}
                           placeholder="Enter pet level"
+                          min="0"
+                          max="100"
                         />
                         <GaugeIcon className="absolute right-3 top-2.5 h-5 w-5 text-white" />
                       </div>
@@ -150,7 +177,11 @@ function App() {
                         <input
                           type="number"
                           value={age}
-                          onChange={(e) => setAge(e.target.value)}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            if (value >= 0 && value <= 100)
+                              setAge(e.target.value);
+                          }}
                           disabled={!hatchedWeight}
                           className={`w-full px-4 py-2 rounded-xl pr-10 text-white ${
                             hatchedWeight
@@ -158,6 +189,8 @@ function App() {
                               : "bg-gray-400 cursor-not-allowed"
                           }`}
                           placeholder="Enter pet level"
+                          min="0"
+                          max="100"
                         />
                         <GaugeIcon className="absolute right-3 top-2.5 h-5 w-5 text-white" />
                       </div>
@@ -208,6 +241,8 @@ function App() {
           </div>
         </section>
       </section>
+
+      <Footer />
     </main>
   );
 }
