@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const navItems = [
-  { name: "Weight Calculator", path: "/" }
-];
+const navItems = [{ name: "Weight Calculator", path: "/" }];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,10 +10,10 @@ export default function Navbar() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-lime-100 shadow-md px-4 py-3 md:px-8 h-20 flex">
+    <nav className="bg-lime-100 shadow-md px-4 py-3 md:px-8 h-20 flex rounded-xl">
       <div className="w-full mx-auto flex justify-between items-center">
         <Link to="/" className="text-2xl font-bold text-lime-800">
-          GAG Weight
+          🌻Weight Calculator (GAG)
         </Link>
 
         <div className="md:hidden">
