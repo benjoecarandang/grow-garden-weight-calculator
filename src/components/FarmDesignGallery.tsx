@@ -1,23 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
-import { X, Search, Grid, List, Heart, Share2, Download } from "lucide-react";
+import { X, Search, Grid, List, Heart } from "lucide-react";
 import farmDesigns from "../data/farmDesignsObject";
 import { Analytics } from "@vercel/analytics/react";
+
+function getFavorites() {
+  try {
+    return JSON.parse(localStorage.getItem("favoriteFarmDesigns") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function setFavorites(favs: string[]) {
+  localStorage.setItem("favoriteFarmDesigns", JSON.stringify(favs));
+}
 
 export default function FarmDesignGallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchTerm, setSearchTerm] = useState("");
+  const [favorites, setFavoritesState] = useState<string[]>(getFavorites());
+  const [showFavorites, setShowFavorites] = useState(false);
 
-  const filteredDesigns = farmDesigns.filter(design =>
-    design.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    design.uploader.toLowerCase().includes(searchTerm.toLowerCase())
+  useEffect(() => {
+    setFavorites(favorites);
+  }, [favorites]);
+
+  const toggleFavorite = (id: string) => {
+    setFavoritesState((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
+  };
+
+  let filteredDesigns = farmDesigns.filter(
+    (design) =>
+      design.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      design.uploader.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  if (showFavorites) {
+    filteredDesigns = filteredDesigns.filter((d) => favorites.includes(String(d.id)));
+  }
 
   return (
     <>
       <Analytics />
-      
       <div className="space-y-8">
         {/* Hero Section */}
         <div className="text-center space-y-4">
@@ -50,7 +77,7 @@ export default function FarmDesignGallery() {
               />
             </div>
 
-            {/* View Toggle */}
+            {/* View Toggle & Favorites Toggle */}
             <div className="flex items-center space-x-2 bg-white/60 rounded-xl p-1">
               <button
                 onClick={() => setViewMode("grid")}
@@ -72,6 +99,18 @@ export default function FarmDesignGallery() {
               >
                 <List className="w-5 h-5" />
               </button>
+              <button
+                onClick={() => setShowFavorites((v) => !v)}
+                className={`p-2 rounded-lg transition-all duration-200 flex items-center space-x-1 ${
+                  showFavorites
+                    ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg"
+                    : "text-pink-500 hover:text-pink-600 hover:bg-white/60"
+                }`}
+                title="Show Favorites"
+              >
+                <Heart className={`w-5 h-5 ${showFavorites ? "fill-current" : ""}`} />
+                <span className="hidden sm:inline text-xs font-semibold">Favorites</span>
+              </button>
             </div>
           </div>
         </div>
@@ -85,60 +124,49 @@ export default function FarmDesignGallery() {
         </div>
 
         {/* Gallery Grid */}
-        <div className={
-          viewMode === "grid" 
-            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-            : "space-y-4"
-        }>
-          {filteredDesigns.map((design) => (
-            <div
-              key={design.id}
-              className={`glass-effect rounded-2xl overflow-hidden card-shadow hover:card-shadow-hover transition-all duration-300 cursor-pointer group ${
-                viewMode === "list" ? "flex" : ""
-              }`}
-              onClick={() => setSelectedImage(design.imageUrl)}
-            >
-              <div className={`relative ${viewMode === "list" ? "w-48 h-32" : "h-48"}`}>
-                <img
-                  src={design.imageUrl}
-                  alt={design.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                    <button className="p-2 bg-white/20 backdrop-blur-sm rounded-lg text-white hover:bg-white/30 transition-colors">
-                      <Heart className="w-4 h-4" />
-                    </button>
-                    <button className="p-2 bg-white/20 backdrop-blur-sm rounded-lg text-white hover:bg-white/30 transition-colors">
-                      <Share2 className="w-4 h-4" />
-                    </button>
-                  </div>
+        <div
+          className={
+            viewMode === "grid"
+              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              : "grid grid-cols-1 md:grid-cols-2 gap-6"
+          }
+        >
+          {filteredDesigns.map((design) => {
+            const idStr = String(design.id);
+            const isFav = favorites.includes(idStr);
+            return (
+              <div
+                key={design.id}
+                className={`glass-effect rounded-2xl overflow-hidden card-shadow hover:card-shadow-hover transition-all duration-300 group ${
+                  viewMode === "list" ? "flex items-center" : ""
+                }`}
+                onClick={() => setSelectedImage(design.imageUrl)}
+              >
+                <div className={`relative ${viewMode === "list" ? "w-48 h-32 flex-shrink-0" : "h-48"}`}>
+                  <img
+                    src={design.imageUrl}
+                    alt={design.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <button
+                    className={`absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full text-pink-500 hover:text-pink-600 hover:bg-white transition-colors z-10 shadow-md ${isFav ? "" : "opacity-80"}`}
+                    onClick={e => { e.stopPropagation(); toggleFavorite(idStr); }}
+                    title={isFav ? "Remove from favorites" : "Add to favorites"}
+                  >
+                    {isFav ? <Heart className="w-5 h-5 fill-current" /> : <Heart className="w-5 h-5" />}
+                  </button>
+                </div>
+                <div className={`p-4 ${viewMode === "list" ? "flex-1 flex flex-col justify-center" : ""}`}>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+                    {design.title}
+                  </h3>
+                  <p className="text-sm text-gray-700 mb-3">
+                    by <span className="font-medium text-purple-600">{design.uploader}</span>
+                  </p>
                 </div>
               </div>
-              
-              <div className={`p-4 ${viewMode === "list" ? "flex-1" : ""}`}>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
-                  {design.title}
-                </h3>
-                <p className="text-sm text-gray-700 mb-3">
-                  by <span className="font-medium text-purple-600">{design.uploader}</span>
-                </p>
-                
-                {viewMode === "list" && (
-                  <div className="flex items-center space-x-2">
-                    <button className="flex items-center space-x-1 px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm rounded-lg hover:shadow-lg transition-all duration-200">
-                      <Download className="w-3 h-3" />
-                      <span>Save</span>
-                    </button>
-                    <button className="flex items-center space-x-1 px-3 py-1 bg-white/60 text-gray-800 text-sm rounded-lg hover:bg-white/80 transition-colors">
-                      <Share2 className="w-3 h-3" />
-                      <span>Share</span>
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Empty State */}
@@ -160,12 +188,6 @@ export default function FarmDesignGallery() {
         >
           <div className="relative bg-white rounded-2xl overflow-hidden max-w-4xl w-full max-h-[90vh]">
             <div className="absolute top-4 right-4 z-10 flex items-center space-x-2">
-              <button className="p-2 bg-white/20 backdrop-blur-sm rounded-lg text-gray-800 hover:bg-white/30 transition-colors">
-                <Share2 className="w-5 h-5" />
-              </button>
-              <button className="p-2 bg-white/20 backdrop-blur-sm rounded-lg text-gray-800 hover:bg-white/30 transition-colors">
-                <Download className="w-5 h-5" />
-              </button>
               <button
                 onClick={() => setSelectedImage(null)}
                 className="p-2 bg-white/20 backdrop-blur-sm rounded-lg text-gray-800 hover:bg-white/30 transition-colors"

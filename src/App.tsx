@@ -4,6 +4,7 @@ import PetCalculator from "./components/PetCalculator";
 import "./App.css";
 import Footer from "./components/Footer";
 import FarmDesignGallery from "./components/FarmDesignGallery";
+import TipJar from "./components/TipJar";
 
 function App() {
   return (
@@ -11,9 +12,18 @@ function App() {
       {/* Background with animated elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-20 h-20 bg-green-200 rounded-full opacity-20 animate-float"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-200 rounded-full opacity-20 animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-40 left-20 w-12 h-12 bg-blue-200 rounded-full opacity-20 animate-float" style={{ animationDelay: '4s' }}></div>
-        <div className="absolute bottom-20 right-10 w-24 h-24 bg-purple-200 rounded-full opacity-20 animate-float" style={{ animationDelay: '1s' }}></div>
+        <div
+          className="absolute top-40 right-20 w-16 h-16 bg-yellow-200 rounded-full opacity-20 animate-float"
+          style={{ animationDelay: "2s" }}
+        ></div>
+        <div
+          className="absolute bottom-40 left-20 w-12 h-12 bg-blue-200 rounded-full opacity-20 animate-float"
+          style={{ animationDelay: "4s" }}
+        ></div>
+        <div
+          className="absolute bottom-20 right-10 w-24 h-24 bg-purple-200 rounded-full opacity-20 animate-float"
+          style={{ animationDelay: "1s" }}
+        ></div>
       </div>
 
       {/* Main content */}
@@ -28,6 +38,8 @@ function App() {
             </Routes>
           </div>
         </main>
+
+        <TipJar />
 
         <Footer />
       </div>

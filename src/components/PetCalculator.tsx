@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { WeightIcon, GaugeIcon, Calculator, TrendingUp, Leaf, Zap } from "lucide-react";
+import {
+  WeightIcon,
+  GaugeIcon,
+  Calculator,
+  TrendingUp,
+  Leaf,
+  Zap
+} from "lucide-react";
 import PetWeightClassification from "./PetWeightClassification";
 import PetTabs from "./PetTabs";
 import { Analytics } from "@vercel/analytics/react";
@@ -25,11 +32,40 @@ function PetCalculator() {
   };
 
   const classify = (weight: number) => {
-    if (weight > 8.99) return { label: "Godly", color: "from-purple-500 to-pink-500", icon: "🌟", bg: "bg-gradient-to-r from-purple-100 to-pink-100" };
-    if (weight > 7.99) return { label: "Titanic", color: "from-blue-500 to-cyan-500", icon: "🗿", bg: "bg-gradient-to-r from-blue-100 to-cyan-100" };
-    if (weight > 4.99) return { label: "Huge", color: "from-yellow-500 to-orange-500", icon: "🪵", bg: "bg-gradient-to-r from-yellow-100 to-orange-100" };
-    if (weight > 0.99) return { label: "Normal", color: "from-green-500 to-emerald-500", icon: "🐔", bg: "bg-gradient-to-r from-green-100 to-emerald-100" };
-    return { label: "Small", color: "from-gray-400 to-gray-500", icon: "🌱", bg: "bg-gradient-to-r from-gray-100 to-gray-200" };
+    if (weight > 8.99)
+      return {
+        label: "Godly",
+        color: "from-purple-500 to-pink-500",
+        icon: "🌟",
+        bg: "bg-gradient-to-r from-purple-100 to-pink-100"
+      };
+    if (weight > 7.99)
+      return {
+        label: "Titanic",
+        color: "from-blue-500 to-cyan-500",
+        icon: "🗿",
+        bg: "bg-gradient-to-r from-blue-100 to-cyan-100"
+      };
+    if (weight > 4.99)
+      return {
+        label: "Huge",
+        color: "from-yellow-500 to-orange-500",
+        icon: "🪵",
+        bg: "bg-gradient-to-r from-yellow-100 to-orange-100"
+      };
+    if (weight > 0.99)
+      return {
+        label: "Normal",
+        color: "from-green-500 to-emerald-500",
+        icon: "🐔",
+        bg: "bg-gradient-to-r from-green-100 to-emerald-100"
+      };
+    return {
+      label: "Small",
+      color: "from-gray-400 to-gray-500",
+      icon: "🌱",
+      bg: "bg-gradient-to-r from-gray-100 to-gray-200"
+    };
   };
 
   const weight = calculateWeight(hatchedWeight, age);
@@ -54,7 +90,8 @@ function PetCalculator() {
             </h1>
           </div>
           <p className="text-lg text-gray-800 max-w-2xl mx-auto">
-            Master the art of pet growth! Calculate weights, predict potential, and discover your pet's true classification.
+            Master the art of pet growth! Calculate weights, predict potential,
+            and discover your pet's true classification.
           </p>
         </div>
 
@@ -68,14 +105,25 @@ function PetCalculator() {
                 <div className="p-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl">
                   <TrendingUp className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">Growth Mechanics</h2>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Growth Mechanics
+                </h2>
               </div>
               <div className="prose prose-gray max-w-none">
                 <p className="text-gray-800 leading-relaxed">
-                  Your pet's journey begins at hatching with a randomly assigned weight that shapes its destiny. 
-                  This initial weight determines both starting stats and growth potential by age 100. 
-                  <span className="font-semibold text-green-700"> Small pets (0-0.99kg)</span> grow modestly, while 
-                  <span className="font-semibold text-purple-700"> Godly pets (9kg+)</span> reach legendary proportions!
+                  Your pet's journey begins at hatching with a randomly assigned
+                  weight that shapes its destiny. This initial weight determines
+                  both starting stats and growth potential by age 100.
+                  <span className="font-semibold text-green-700">
+                    {" "}
+                    Small pets (0-0.99kg)
+                  </span>{" "}
+                  grow modestly, while
+                  <span className="font-semibold text-purple-700">
+                    {" "}
+                    Godly pets (9kg+)
+                  </span>{" "}
+                  reach legendary proportions!
                 </p>
               </div>
             </div>
@@ -89,8 +137,12 @@ function PetCalculator() {
                       <Leaf className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900">Reverse Calculation</h3>
-                      <p className="text-sm text-gray-700">Find your pet's original hatched weight</p>
+                      <h3 className="text-xl font-bold text-gray-900">
+                        Reverse Calculation
+                      </h3>
+                      <p className="text-sm text-gray-700">
+                        Find your pet's original hatched weight
+                      </p>
                     </div>
                   </div>
 
@@ -145,11 +197,15 @@ function PetCalculator() {
                       Estimated Hatched Weight
                     </label>
                     <div className="p-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl text-white text-center">
-                      <span className="text-2xl font-bold">{baseWeight} kg</span>
+                      <span className="text-2xl font-bold">
+                        {baseWeight} kg
+                      </span>
                     </div>
 
                     {parseFloat(baseWeight) > 0 && (
-                      <div className={`p-4 rounded-xl text-center ${grownClass.bg}`}>
+                      <div
+                        className={`p-4 rounded-xl text-center ${grownClass.bg}`}
+                      >
                         <div className="flex items-center justify-center space-x-2">
                           <span className="text-2xl">{grownClass.icon}</span>
                           <span className="text-lg font-bold text-gray-900">
@@ -168,8 +224,12 @@ function PetCalculator() {
                       <Zap className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900">Forward Calculation</h3>
-                      <p className="text-sm text-gray-700">Predict your pet's future weight</p>
+                      <h3 className="text-xl font-bold text-gray-900">
+                        Forward Calculation
+                      </h3>
+                      <p className="text-sm text-gray-700">
+                        Predict your pet's future weight
+                      </p>
                     </div>
                   </div>
 
@@ -227,21 +287,43 @@ function PetCalculator() {
                       <span className="text-2xl font-bold">{weight} kg</span>
                     </div>
 
-                    {hatchedWeight.trim() !== "" && !isNaN(parseFloat(hatchedWeight)) && (
-                      <div className={`p-4 rounded-xl text-center ${hatchedClass.bg}`}>
-                        <div className="flex items-center justify-center space-x-2">
-                          <span className="text-2xl">{hatchedClass.icon}</span>
-                          <span className="text-lg font-bold text-gray-900">
-                            {hatchedClass.label} Classification
-                          </span>
+                    {hatchedWeight.trim() !== "" &&
+                      !isNaN(parseFloat(hatchedWeight)) && (
+                        <div
+                          className={`p-4 rounded-xl text-center ${hatchedClass.bg}`}
+                        >
+                          <div className="flex items-center justify-center space-x-2">
+                            <span className="text-2xl">
+                              {hatchedClass.icon}
+                            </span>
+                            <span className="text-lg font-bold text-gray-900">
+                              {hatchedClass.label} Classification
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
                   </div>
                 </div>
               }
             />
 
+            {/* Coming Soon Section */}
+            <div className="text-center">
+              <div className="glass-effect p-8 rounded-2xl card-shadow w-full mx-auto">
+                <div className="flex items-center justify-center space-x-3 mb-4">
+                  <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl">
+                    <Zap className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    More Features Coming Soon!
+                  </h3>
+                </div>
+                <p className="text-gray-800">
+                  We're cultivating new tools and calculators to help you raise
+                  the most magnificent garden ever!
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Sidebar */}
@@ -250,21 +332,6 @@ function PetCalculator() {
               <PetWeightClassification />
             </div>
           </aside>
-        </div>
-
-        {/* Coming Soon Section */}
-        <div className="text-center">
-          <div className="glass-effect p-8 rounded-2xl card-shadow max-w-2xl mx-auto">
-            <div className="flex items-center justify-center space-x-3 mb-4">
-              <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl">
-                <Zap className="w-5 h-5 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900">More Features Coming Soon!</h3>
-            </div>
-            <p className="text-gray-800">
-              We're cultivating new tools and calculators to help you raise the most magnificent garden ever!
-            </p>
-          </div>
         </div>
       </div>
     </>
