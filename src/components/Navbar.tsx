@@ -35,6 +35,10 @@ export default function Navbar() {
             <NavLink to="/" currentPath={location.pathname}>
               Weight Calculator
             </NavLink>
+
+            <NavLink to="/design-ideas" currentPath={location.pathname}>
+              Design Ideas
+            </NavLink>
           </div>
 
           {/* Mobile menu button */}
@@ -83,6 +87,9 @@ export default function Navbar() {
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <MobileNavLink to="/" currentPath={location.pathname}>
             Weight Calculator
+          </MobileNavLink>
+          <MobileNavLink to="/design-ideas" currentPath={location.pathname}>
+            Design Ideas
           </MobileNavLink>
         </div>
       </div>

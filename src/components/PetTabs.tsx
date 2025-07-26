@@ -10,7 +10,7 @@ const PetTabs: React.FC<PetTabsProps> = ({ grownContent, hatchedContent }) => {
   const [activeTab, setActiveTab] = useState<"grown" | "hatched">("grown");
 
   return (
-    <div className="bg-gradient-to-br bg-[#A47148] bg-[#A47148] p-4 rounded-2xl shadow-md mb-0">
+    <div className="bg-gradient-to-br from-lime-100 to-green-50 p-4 rounded-2xl shadow-md">
       <div className="flex space-x-2 mb-4">
         <button
           onClick={() => setActiveTab("grown")}
@@ -36,7 +36,9 @@ const PetTabs: React.FC<PetTabsProps> = ({ grownContent, hatchedContent }) => {
         </button>
       </div>
 
-      {activeTab === "grown" ? grownContent : hatchedContent}
+      <div className="p-4 rounded-xl shadow-inner bg-[#A47148] mb-0">
+        {activeTab === "grown" ? grownContent : hatchedContent}
+      </div>
     </div>
   );
 };
