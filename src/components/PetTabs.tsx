@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
+import { ChevronRight } from "lucide-react";
 
 interface PetTabsProps {
   grownContent: ReactNode;
@@ -10,34 +11,52 @@ const PetTabs: React.FC<PetTabsProps> = ({ grownContent, hatchedContent }) => {
   const [activeTab, setActiveTab] = useState<"grown" | "hatched">("grown");
 
   return (
-    <div className="bg-gradient-to-br from-lime-100 to-green-50 p-4 rounded-2xl shadow-md">
-      <div className="flex space-x-2 mb-4">
+    <div className="glass-effect rounded-2xl card-shadow overflow-hidden">
+      {/* Tab Headers */}
+      <div className="flex bg-white/60 backdrop-blur-sm">
         <button
           onClick={() => setActiveTab("grown")}
-          className={`px-4 py-2 rounded-xl font-semibold transition-all duration-200 
-            ${
-              activeTab === "grown"
-                ? "bg-lime-600 text-white shadow-md"
-                : "bg-white text-lime-800 border border-lime-300"
-            }`}
+          className={`flex-1 flex items-center justify-center px-6 py-4 font-semibold transition-all duration-300 relative ${
+            activeTab === "grown"
+              ? "text-green-800 bg-gradient-to-r from-green-100 to-emerald-100"
+              : "text-gray-800 hover:text-gray-900 hover:bg-white/50"
+          }`}
         >
-          🌳 Fully Grown
+          <span className="flex items-center space-x-2">
+            <span className="text-xl">🌱</span>
+            <span>Reverse Calculate</span>
+          </span>
+          {activeTab === "grown" && (
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 to-emerald-500"></div>
+          )}
         </button>
+        
         <button
           onClick={() => setActiveTab("hatched")}
-          className={`px-4 py-2 rounded-xl font-semibold transition-all duration-200 
-            ${
-              activeTab === "hatched"
-                ? "bg-lime-600 text-white shadow-md"
-                : "bg-white text-lime-800 border border-lime-300"
-            }`}
+          className={`flex-1 flex items-center justify-center px-6 py-4 font-semibold transition-all duration-300 relative ${
+            activeTab === "hatched"
+              ? "text-green-800 bg-gradient-to-r from-green-100 to-emerald-100"
+              : "text-gray-800 hover:text-gray-900 hover:bg-white/50"
+          }`}
         >
-          🐣 Newly Hatched
+          <span className="flex items-center space-x-2">
+            <span className="text-xl">🌼</span>
+            <span>Forward Calculate</span>
+          </span>
+          {activeTab === "hatched" && (
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 to-emerald-500"></div>
+          )}
         </button>
       </div>
 
-      <div className="p-4 rounded-xl shadow-inner bg-[#A47148] mb-0">
-        {activeTab === "grown" ? grownContent : hatchedContent}
+      {/* Tab Content */}
+      <div className="p-6 bg-white/90 backdrop-blur-sm">
+        <div className={`transition-all duration-300 ${activeTab === "grown" ? "opacity-100" : "opacity-0 hidden"}`}>
+          {grownContent}
+        </div>
+        <div className={`transition-all duration-300 ${activeTab === "hatched" ? "opacity-100" : "opacity-0 hidden"}`}>
+          {hatchedContent}
+        </div>
       </div>
     </div>
   );

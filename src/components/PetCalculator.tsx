@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { WeightIcon, GaugeIcon } from "lucide-react";
+import { WeightIcon, GaugeIcon, Calculator, TrendingUp, Leaf, Zap } from "lucide-react";
 import PetWeightClassification from "./PetWeightClassification";
 import PetTabs from "./PetTabs";
 import { Analytics } from "@vercel/analytics/react";
@@ -25,12 +25,11 @@ function PetCalculator() {
   };
 
   const classify = (weight: number) => {
-    if (weight > 8.99) return { label: "Godly", color: "#FDC5F5", icon: "🌟" };
-    if (weight > 7.99)
-      return { label: "Titanic", color: "#A2D2FF", icon: "🗿" };
-    if (weight > 4.99) return { label: "Huge", color: "#FDE74C", icon: "🪵" };
-    if (weight > 0.99) return { label: "Normal", color: "#7BC47F", icon: "🐔" };
-    return { label: "Small", color: "#E4E1DC", icon: "🌱" };
+    if (weight > 8.99) return { label: "Godly", color: "from-purple-500 to-pink-500", icon: "🌟", bg: "bg-gradient-to-r from-purple-100 to-pink-100" };
+    if (weight > 7.99) return { label: "Titanic", color: "from-blue-500 to-cyan-500", icon: "🗿", bg: "bg-gradient-to-r from-blue-100 to-cyan-100" };
+    if (weight > 4.99) return { label: "Huge", color: "from-yellow-500 to-orange-500", icon: "🪵", bg: "bg-gradient-to-r from-yellow-100 to-orange-100" };
+    if (weight > 0.99) return { label: "Normal", color: "from-green-500 to-emerald-500", icon: "🐔", bg: "bg-gradient-to-r from-green-100 to-emerald-100" };
+    return { label: "Small", color: "from-gray-400 to-gray-500", icon: "🌱", bg: "bg-gradient-to-r from-gray-100 to-gray-200" };
   };
 
   const weight = calculateWeight(hatchedWeight, age);
@@ -43,44 +42,61 @@ function PetCalculator() {
     <>
       <Analytics />
 
-      <section className="max-w-7xl mx-auto mb-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="space-y-8">
+        {/* Hero Section */}
+        <div className="text-center space-y-4">
+          <div className="flex items-center justify-center space-x-3 mb-6">
+            <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl">
+              <Calculator className="w-8 h-8 text-white" />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+              Pet Weight Calculator
+            </h1>
+          </div>
+          <p className="text-lg text-gray-800 max-w-2xl mx-auto">
+            Master the art of pet growth! Calculate weights, predict potential, and discover your pet's true classification.
+          </p>
+        </div>
+
+        {/* Main Calculator Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Main Calculator Section */}
           <div className="lg:col-span-3 space-y-6">
-            {/* Adsense placement */}
-            <div className="w-full max-h-24 bg-[#FDC5F5] text-[#5D4037] flex items-center justify-center rounded-xl shadow-md"></div>
-
-            <div className="bg-green-50 p-6 rounded-lg shadow-md mx-auto">
-              <h2 className="text-2xl font-bold text-green-800 mb-4">
-                Pet Growth Mechanics
-              </h2>
-
-              <div>
-                <p>
-                  Upon hatching, a pet's weight is randomly assigned and
-                  directly impacts both its starting stats and its potential
-                  growth by age 100. Classification is based on hatch weight:
-                  Small (Less than 1kg), Normal (1kg to 4.99kg), Huge (5kg to
-                  7.99kg), Titanic (8kg and 8.99kg), and Godly (9kg+). For
-                  example, a pet hatched at 1 kg may reach up to 10 kg at age
-                  100, while one hatched at 3 kg can grow up to 30 kg.
+            {/* Info Card */}
+            <div className="glass-effect p-6 rounded-2xl card-shadow">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="p-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl">
+                  <TrendingUp className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900">Growth Mechanics</h2>
+              </div>
+              <div className="prose prose-gray max-w-none">
+                <p className="text-gray-800 leading-relaxed">
+                  Your pet's journey begins at hatching with a randomly assigned weight that shapes its destiny. 
+                  This initial weight determines both starting stats and growth potential by age 100. 
+                  <span className="font-semibold text-green-700"> Small pets (0-0.99kg)</span> grow modestly, while 
+                  <span className="font-semibold text-purple-700"> Godly pets (9kg+)</span> reach legendary proportions!
                 </p>
               </div>
             </div>
 
+            {/* Calculator Tabs */}
             <PetTabs
               grownContent={
-                <>
-                  <section>
-                    <h2 className="text-xl font-semibold mb-2 text-white">
-                      🌱 Reverse: Hatched Weight
-                    </h2>
-                    <p className="text-sm text-[#FDE74C] mb-4">
-                      Input current pet weight and level to calculate hatched
-                      weight.
-                    </p>
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <div className="p-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl">
+                      <Leaf className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900">Reverse Calculation</h3>
+                      <p className="text-sm text-gray-700">Find your pet's original hatched weight</p>
+                    </div>
+                  </div>
 
-                    <div className="mb-4">
-                      <label className="block text-sm font-semibold mb-1 text-white">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-gray-800">
                         Current Weight (kg)
                       </label>
                       <div className="relative">
@@ -88,15 +104,15 @@ function PetCalculator() {
                           type="number"
                           value={currentWeight}
                           onChange={(e) => setCurrentWeight(e.target.value)}
-                          className="w-full px-4 py-2 rounded-xl text-white pr-10 focus:outline-none focus:ring-2 focus:ring-[#7BC47F]"
+                          className="w-full px-4 py-3 rounded-xl input-modern focus-ring"
                           placeholder="Enter current weight"
                         />
-                        <WeightIcon className="absolute right-3 top-2.5 h-5 w-5 text-white" />
+                        <WeightIcon className="absolute right-3 top-3 h-5 w-5 text-gray-500" />
                       </div>
                     </div>
 
-                    <div className="mb-4">
-                      <label className="block text-sm font-semibold mb-1 text-white">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-gray-800">
                         Level (Age)
                       </label>
                       <div className="relative">
@@ -109,50 +125,57 @@ function PetCalculator() {
                               setReverseAge(e.target.value);
                           }}
                           disabled={!currentWeight}
-                          className={`w-full px-4 py-2 rounded-xl pr-10 text-white ${
+                          className={`w-full px-4 py-3 rounded-xl pr-10 ${
                             currentWeight
-                              ? "focus:outline-none focus:ring-2 focus:ring-[#7BC47F]"
-                              : "bg-gray-400 cursor-not-allowed"
+                              ? "input-modern focus-ring"
+                              : "bg-gray-100 text-gray-500 cursor-not-allowed"
                           }`}
                           placeholder="Enter pet level"
                           min="0"
                           max="100"
                         />
-                        <GaugeIcon className="absolute right-3 top-2.5 h-5 w-5 text-white" />
+                        <GaugeIcon className="absolute right-3 top-3 h-5 w-5 text-gray-500" />
                       </div>
                     </div>
+                  </div>
 
-                    <label className="block text-sm font-semibold mb-1 text-white">
-                      Estimated Hatched Weight (kg)
+                  {/* Result Display */}
+                  <div className="space-y-4">
+                    <label className="block text-sm font-semibold text-gray-800">
+                      Estimated Hatched Weight
                     </label>
-                    <div className="w-full px-4 py-2 rounded-xl bg-[#7BC47F] text-white text-center font-medium">
-                      {baseWeight}
+                    <div className="p-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl text-white text-center">
+                      <span className="text-2xl font-bold">{baseWeight} kg</span>
                     </div>
 
                     {parseFloat(baseWeight) > 0 && (
-                      <div
-                        className="mt-2 text-center font-bold text-white py-2 rounded-xl"
-                        style={{ backgroundColor: grownClass.color }}
-                      >
-                        {grownClass.icon} Classification: {grownClass.label}
+                      <div className={`p-4 rounded-xl text-center ${grownClass.bg}`}>
+                        <div className="flex items-center justify-center space-x-2">
+                          <span className="text-2xl">{grownClass.icon}</span>
+                          <span className="text-lg font-bold text-gray-900">
+                            {grownClass.label} Classification
+                          </span>
+                        </div>
                       </div>
                     )}
-                  </section>
-                </>
+                  </div>
+                </div>
               }
               hatchedContent={
-                <>
-                  <section>
-                    <h2 className="text-xl font-semibold mb-2 text-white">
-                      🌼 Weight at Level
-                    </h2>
-                    <p className="text-sm text-[#FDE74C] mb-4">
-                      Input hatched weight and level to calculate current
-                      weight.
-                    </p>
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-3 mb-6">
+                    <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl">
+                      <Zap className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900">Forward Calculation</h3>
+                      <p className="text-sm text-gray-700">Predict your pet's future weight</p>
+                    </div>
+                  </div>
 
-                    <div className="mb-4">
-                      <label className="block text-sm font-semibold mb-1 text-white">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-gray-800">
                         Hatched Weight (kg)
                       </label>
                       <div className="relative">
@@ -160,15 +183,15 @@ function PetCalculator() {
                           type="number"
                           value={hatchedWeight}
                           onChange={(e) => setHatchedWeight(e.target.value)}
-                          className="w-full px-4 py-2 rounded-xl text-white pr-10 focus:outline-none focus:ring-2 focus:ring-[#7BC47F]"
+                          className="w-full px-4 py-3 rounded-xl input-modern focus-ring"
                           placeholder="Enter hatched weight"
                         />
-                        <WeightIcon className="absolute right-3 top-2.5 h-5 w-5 text-white" />
+                        <WeightIcon className="absolute right-3 top-3 h-5 w-5 text-gray-500" />
                       </div>
                     </div>
 
-                    <div className="mb-4">
-                      <label className="block text-sm font-semibold mb-1 text-white">
+                    <div className="space-y-2">
+                      <label className="block text-sm font-semibold text-gray-800">
                         Level (Age)
                       </label>
                       <div className="relative">
@@ -181,64 +204,69 @@ function PetCalculator() {
                               setAge(e.target.value);
                           }}
                           disabled={!hatchedWeight}
-                          className={`w-full px-4 py-2 rounded-xl pr-10 text-white ${
+                          className={`w-full px-4 py-3 rounded-xl pr-10 ${
                             hatchedWeight
-                              ? "focus:outline-none focus:ring-2 focus:ring-[#7BC47F]"
-                              : "bg-gray-400 cursor-not-allowed"
+                              ? "input-modern focus-ring"
+                              : "bg-gray-100 text-gray-500 cursor-not-allowed"
                           }`}
                           placeholder="Enter pet level"
                           min="0"
                           max="100"
                         />
-                        <GaugeIcon className="absolute right-3 top-2.5 h-5 w-5 text-white" />
+                        <GaugeIcon className="absolute right-3 top-3 h-5 w-5 text-gray-500" />
                       </div>
                     </div>
+                  </div>
 
-                    <label className="block text-sm font-semibold mb-1 text-white">
-                      Weight at Level (kg)
+                  {/* Result Display */}
+                  <div className="space-y-4">
+                    <label className="block text-sm font-semibold text-gray-800">
+                      Weight at Level
                     </label>
-                    <div className="w-full px-4 py-2 rounded-xl bg-[#7BC47F] text-white text-center font-medium">
-                      {weight}
+                    <div className="p-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl text-white text-center">
+                      <span className="text-2xl font-bold">{weight} kg</span>
                     </div>
 
-                    {hatchedWeight.trim() !== "" &&
-                      !isNaN(parseFloat(hatchedWeight)) && (
-                        <div
-                          className="mt-2 text-center font-bold text-white py-2 rounded-xl"
-                          style={{ backgroundColor: hatchedClass.color }}
-                        >
-                          {hatchedClass.icon} Classification:{" "}
-                          {hatchedClass.label}
+                    {hatchedWeight.trim() !== "" && !isNaN(parseFloat(hatchedWeight)) && (
+                      <div className={`p-4 rounded-xl text-center ${hatchedClass.bg}`}>
+                        <div className="flex items-center justify-center space-x-2">
+                          <span className="text-2xl">{hatchedClass.icon}</span>
+                          <span className="text-lg font-bold text-gray-900">
+                            {hatchedClass.label} Classification
+                          </span>
                         </div>
-                      )}
-                  </section>
-                </>
+                      </div>
+                    )}
+                  </div>
+                </div>
               }
             />
 
-            {/* Adsense placement */}
-            <div className="w-full max-h-24 bg-[#FDE74C] text-[#5D4037] flex items-center justify-center rounded-xl shadow-md"></div>
           </div>
 
+          {/* Sidebar */}
           <aside className="lg:col-span-1">
-            <div className="sticky top-8">
+            <div className="sticky top-24">
               <PetWeightClassification />
             </div>
           </aside>
         </div>
 
-        <section className="mt-12 text-center mb-4">
-          <div className="inline-block bg-white bg-opacity-80 px-6 py-4 rounded-xl shadow-md">
-            <h3 className="text-lg font-bold text-[#5D4037]">
-              🌟 More Features Coming Soon!
-            </h3>
-            <p className="text-sm text-[#5D4037] mt-1">
-              We're working on new tools and calculators to help you raise the
-              best garden!
+        {/* Coming Soon Section */}
+        <div className="text-center">
+          <div className="glass-effect p-8 rounded-2xl card-shadow max-w-2xl mx-auto">
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl">
+                <Zap className="w-5 h-5 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900">More Features Coming Soon!</h3>
+            </div>
+            <p className="text-gray-800">
+              We're cultivating new tools and calculators to help you raise the most magnificent garden ever!
             </p>
           </div>
-        </section>
-      </section>
+        </div>
+      </div>
     </>
   );
 }
