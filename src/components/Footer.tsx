@@ -1,4 +1,4 @@
-import { Heart, Github, Twitter, Mail } from "lucide-react";
+import { Heart, XIcon, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -47,7 +47,7 @@ export default function Footer() {
             <h4 className="font-semibold text-gray-900">Connect</h4>
             <div className="flex space-x-3">
               <a href="https://x.com/bnjcrndng" className="p-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg text-white hover:shadow-lg transition-all duration-200">
-                <Twitter className="w-4 h-4" />
+                <XIcon className="w-4 h-4" />
               </a>
               <a href="mailto:benjoe.carandang@gmail.com" className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg text-white hover:shadow-lg transition-all duration-200">
                 <Mail className="w-4 h-4" />

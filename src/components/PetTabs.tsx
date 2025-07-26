@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
-import { ChevronRight } from "lucide-react";
 
 interface PetTabsProps {
   grownContent: ReactNode;
